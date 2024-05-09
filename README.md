@@ -1,2 +1,2 @@
-\Name:Fang Huang Email:huang.fang@northeastern.edu
+Fang Huang :huang.fang@northeastern.edu
 cs5008 with Prof. Lee
