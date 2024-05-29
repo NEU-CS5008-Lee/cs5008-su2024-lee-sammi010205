@@ -1,3 +1,7 @@
+//Name: Fang Huang, Summer_2024
+//Email: huang.fang@northeastern.edu
+//lab_3_queue
+
 #include <stdio.h>
 #define N 8 //Max. capacity of Queue
 
