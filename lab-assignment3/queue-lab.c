@@ -28,14 +28,21 @@ int peek(int *arr)
         printf("Queue is empty.\n");
         return -1;
     }
-    return arr[0];
+    return arr[front + 1];
 }
 
 /*---To insert the elements into the queue------*/
 void enqueue(int data, int *arr)
 {
     //insert your code here
-
+    if(isfull()) {
+	    printf("Queue is full\n");
+    
+    }else{
+	    arr[++rear] = data;  
+	    printf("Enqueued data is:%d\n", data);
+	    
+    }
  
 }
 
@@ -43,6 +50,18 @@ void enqueue(int data, int *arr)
 int dequeue(int *arr)
 {   
     //insert your code here
+    if(isempty()){
+	    printf("Queue is empty\n");
+	    return -9999;
+    
+    }else{
+	    int d = arr[++front];
+	    if(front == rear){
+		//means is empty now, update the values for front and rear
+	        rear = front = -1;
+	    }
+    	return d;
+    }
 
 }
 
