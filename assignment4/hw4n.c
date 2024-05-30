@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <time.h>
-#include <string.h>
 
 #define LIMIT 50
 #define RAND_RANGE 100
