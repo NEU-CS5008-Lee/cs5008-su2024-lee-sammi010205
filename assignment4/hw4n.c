@@ -1,9 +1,10 @@
-// name: <your name here>
-// email: <your email here>
+// name: Fang Huang
+// email: huang.fang@northeaster.edu
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <time.h>
+#include <string.h>
 
 #define LIMIT 50
 #define RAND_RANGE 100
@@ -38,6 +39,14 @@ void selection_sort_2arr(int* source, int* dest, bool* valid)
   for (int i=0; i<LIMIT; i++) {
 
   // INSERT YOUR CODE HERE
+     smallest = -1;
+     for (int j=0; j<LIMIT; j++) {
+	     if (valid[j] &&(smallest == -1 || source[smallest] > source[j])) {
+		     smallest = j;
+	     }
+     }
+     dest[i] = source[smallest];
+     valid[smallest] = false;
 
   }
 }
@@ -51,6 +60,15 @@ void selection_sort_1arr(int* source)
   for (int i=0; i<LIMIT; i++) {
 
   // INSERT YOUR CODE HERE
+  smallest = i;
+  for (int j=i+1; j<LIMIT; j++) {
+	  if (source[j] < source[smallest]) {
+		  smallest = j;
+	  }
+  }
+   temp = source[i];
+   source[i] = source[smallest];
+   source[smallest] = temp;
 
   }
 }
