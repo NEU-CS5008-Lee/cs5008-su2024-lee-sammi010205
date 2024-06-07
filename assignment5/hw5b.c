@@ -1,5 +1,5 @@
-// name: <your name here>
-// email: <your email here>
+// name: Fang Huang
+// email: huang.fang@northeastern.edu
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -38,9 +38,31 @@ void quicky(char* data, int left, int right) {
 
   // ADD YOUR CODE HERE
 
-  return;
-}
+  if (left < right) {
+    char pivot = upperChar(data[right]);
+    int i = left - 1;
 
+    for (int j = left; j < right; j++) {
+      if (upperChar(data[j]) <= pivot) {
+        i++;
+        // Swap elements
+        char temp = data[i];
+        data[i] = data[j];
+        data[j] = temp;
+      }
+    }
+    // Swap the pivot element to its correct position
+    char temp = data[i + 1];
+    data[i + 1] = data[right];
+    data[right] = temp;
+
+    int pivotIndex = i + 1;
+
+    // Recursively sort elements before and after partition
+    quicky(data, left, pivotIndex - 1);
+    quicky(data, pivotIndex + 1, right);
+  }
+}
 
 
 int main(){
