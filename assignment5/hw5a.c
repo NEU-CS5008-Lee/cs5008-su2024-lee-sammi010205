@@ -1,10 +1,11 @@
-// name: <your name here>
-// email: <your email here>
+// name: Fang Huang
+// email: huang.fang@northeastern.edu
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <time.h>
+#include <string.h>
 
 #define LIMIT 200
 #define RAND_RANGE 95  // 95 printing characters x20-x7E
@@ -40,8 +41,40 @@ void mergeIt(
   
 
   // ADD YOUR CODE HERE
-  
-  return;
+    int leftSize = leftStop - leftStart + 1;
+    int rightSize = rightStop - rightStart + 1;
+    
+    char* leftArray = (char*) malloc(leftSize * sizeof(char));
+    char* rightArray = (char*) malloc(rightSize * sizeof(char));
+    
+    // Copy data to temporary arrays
+    memcpy(leftArray, data + leftStart, leftSize * sizeof(char));
+    memcpy(rightArray, data + rightStart, rightSize * sizeof(char));
+    
+    int i = 0, j = 0, k = leftStart;
+    
+    // Merge the two sorted arrays
+    while (i < leftSize && j < rightSize) {
+        if (leftArray[i] <= rightArray[j]) {
+            data[k++] = leftArray[i++];
+        } else {
+            data[k++] = rightArray[j++];
+        }
+    }
+    
+    // Copy remaining elements from leftArray, if any
+    while (i < leftSize) {
+        data[k++] = leftArray[i++];
+    }
+    
+    // Copy remaining elements from rightArray, if any
+    while (j < rightSize) {
+        data[k++] = rightArray[j++];
+    }
+    
+    free(leftArray);
+    free(rightArray);
+    return;
 }
 
 
