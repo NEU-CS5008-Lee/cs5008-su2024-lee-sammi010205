@@ -1,5 +1,5 @@
-// name: <your name here>
-// email: <your email here>
+// name: Fang Huang
+// email: huang.fang@northeastern.edu
 
 // format of document is a bunch of data lines beginning with an integer (rank which we ignore)
 // then a ',' followed by a double-quoted string (city name)
@@ -43,12 +43,23 @@ void appendChar(char* s, char c) {
     strcat(s, charToStr);
 }
 
-
+// remove commas from a string
+void removeCommas(char* str) {
+  char* src = str, *dst = str;
+  while (*src) {
+    if (*src != ',') {
+      *dst++ = *src;
+    }
+    src++;
+  }
+  *dst = '\0';
+}
 
 int main () {
 
   char inputLine[MAXSTRING];   // temporary string to hold input line
   char cityStr[MAXSTRING];     // city name
+  char popStr[MAXSTRING];      // population as string
   int  lineNum;                // line number (city rank)
   int  popInt;                 // population
   int  state;                  // FSM state
@@ -79,6 +90,8 @@ int main () {
       nextChar = 0;
       state = STARTSTATE; 
       strcpy(temp,"");       // temp = ""
+      strcpy(cityStr,"");
+      strcpy(popStr, "");
 
       if (nextChar >= strlen(inputLine)){
 	// if no input string then go to ERRORSTATE
@@ -99,8 +112,71 @@ int main () {
 
 
 	  // ADD YOUR CODE HERE
- 
-	    
+          case S1:
+            // stay in S1 while digits are encountered, move to S2 on comma
+            if (isDigit(inputLine[nextChar])) {
+              appendChar(temp, inputLine[nextChar]);
+            } else if (inputLine[nextChar] == ',') {
+              state = S2;
+            } else {
+              state = ERRORSTATE;
+            }
+            break;
+
+          case S2:
+            // look for the opening quote of the city name
+            if (inputLine[nextChar] == '"') {
+              state = S3;
+            } else {
+              state = ERRORSTATE;
+            }
+            break;
+
+          case S3:
+            // accumulate city name until the closing quote
+            if (inputLine[nextChar] != '"') {
+              appendChar(cityStr, inputLine[nextChar]);
+            } else {
+              state = S4;
+            }
+            break;
+
+          case S4:
+            // look for the comma after the city name
+            if (inputLine[nextChar] == ',') {
+              state = S5;
+            } else {
+              state = ERRORSTATE;
+            }
+            break;
+
+          case S5:
+            // look for the opening quote of the population or an 'X'
+            if (inputLine[nextChar] == '"') {
+              state = S6;
+            } else if (inputLine[nextChar] == '(') {
+              popInt = 0;
+              state = ACCEPTSTATE;
+            } else {
+              state = ERRORSTATE;
+            }
+            break;
+
+          case S6:
+            // accumulate population until the closing quote
+            if (isDigit(inputLine[nextChar]) || inputLine[nextChar] == ',') {
+              appendChar(popStr, inputLine[nextChar]);
+            } else if (inputLine[nextChar] == '"') {
+              removeCommas(popStr);
+              popInt = atoi(popStr);
+              state = ACCEPTSTATE;
+            } else {
+              state = ERRORSTATE;
+            }
+            break;
+
+
+
 	  case ACCEPTSTATE:
 	    // nothing to do - we are done!
 	    break;
