@@ -1,6 +1,7 @@
 /* Lab Assignment for Hospital ER */
-//enter your name here
-//enter your email here
+//Fang Huang
+//huang.fang@northeastern.edu
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -31,6 +32,11 @@ pq* pq_init(){
         return NULL;
     }
     p->heap=(NODE*)malloc(s*sizeof(NODE));
+    if (p->heap == NULL) {
+	    printf("Memory is not allocated\n");
+	    free(p);
+	    return NULL;
+    }
     p->num=0;
 
     return p;
@@ -43,12 +49,23 @@ void swap(NODE *a, NODE* b){
     *a=temp;
 }
 /* function to shift down the node to maintain the max heap property*/
-void heapify(pq*p2,int n, int i ){
+void heapify(pq* p2,int n, int i ){
     int largest=i;/*initialize largest as the root*/
 
-    int lchild=2*i+1;/*left =2*i+1*/
-    int rchild=2*i+2;/*right=2*i+2*/
+    int lchild=2*i+1;   /*left =2*i+1*/
+    int rchild=2*i+2;   /*right=2*i+2*/
     /*insert your code here*/
+    if (lchild < n && p2->heap[lchild].priority > p2->heap[largest].priority ) {
+	    largest = lchild;
+    }
+    if (rchild < n && p2->heap[rchild].priority > p2->heap[largest].priority) {
+	    largest = rchild;
+    }
+    if (largest != i) {
+	    swap(&(p2->heap[i]), &(p2->heap[largest]));
+	    heapify(p2, n, largest);
+    }
+
 
 }
 
@@ -56,7 +73,12 @@ void heapify(pq*p2,int n, int i ){
 void shiftUp(pq* p2,int i)
 {
     /*insert your code here*/
-       
+	int parent = (i-1)/2;
+	while(i>0 && p2->heap[i].priority > p2->heap[parent].priority){
+		swap( &(p2->heap[i]), &(p2->heap[parent])  );
+		i = parent;
+		parent = (i-1)/2;
+	}
     
 }
  
